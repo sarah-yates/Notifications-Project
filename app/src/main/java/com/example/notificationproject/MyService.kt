@@ -6,8 +6,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
-import android.util.EventLogTags
-import android.util.Log
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationManagerCompat
@@ -29,14 +27,13 @@ class MyService : Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun makeNotification() {
         var notificationChannel: NotificationChannel
-        var notificationManager: NotificationManager
         var builder: Notification.Builder
         val channelID = "com.example.notificationproject"
         val description = "Test notification"
 
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        var notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val intent = Intent(this, LauncherActivity::class.java).apply {
+        val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
@@ -48,14 +45,11 @@ class MyService : Service() {
 
         notificationChannel =
             NotificationChannel(channelID, description, NotificationManager.IMPORTANCE_HIGH)
-        notificationChannel.enableLights(true)
-        notificationChannel.lightColor = Color.RED
-        notificationChannel.enableVibration(false)
         notificationManager.createNotificationChannel(notificationChannel)
 
         builder = Notification.Builder(this, channelID)
             .setContent(contentView)
-            .setSmallIcon(R.drawable.notification_icon)
+            .setSmallIcon(R.drawable.icon)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
