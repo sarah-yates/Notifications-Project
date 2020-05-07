@@ -24,9 +24,19 @@ class MainActivity : AppCompatActivity() {
 
         btn_notify.setOnClickListener {
             //creates intent to start the service
-            val intent = Intent(this,MyService::class.java)
-            startService(intent)
+            val intent = Intent(this,MyService::class.java).also { intent ->
+                intent.putExtra("key1", "btn_notify")
+                startService(intent)
+            }
 
        }
+
+        btn_notify2.setOnClickListener {
+            //creates intent to start the service
+            val intent2 = Intent(this,MyService::class.java).also { intent2 ->
+                intent2.putExtra("key2", "btn_notify2")
+                startService(intent2)
+            }
+        }
     }
 }
